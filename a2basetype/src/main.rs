@@ -20,8 +20,8 @@ fn flow_add() {
 
 // 浮点数比较
 fn compare_float() {
-    let a: f64 = 0.1 + 0.2;
-    let b: f64 = 0.3;
+    let a:f64  = 0.1 + 0.2;
+    let b  = 0.3;
     println!("compare {}", a == b);
-    println!("compare {}", (a - b).abs() <= std::f64::EPSILON);
+    println!("compare {}", (a - b).abs() <= f64::EPSILON);
 }
