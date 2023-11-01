@@ -3,6 +3,7 @@
 fn main() {
     flow_add();
     compare_float();
+    char_size();
 }
 
 /*
@@ -20,8 +21,34 @@ fn flow_add() {
 
 // 浮点数比较
 fn compare_float() {
-    let a:f64  = 0.1 + 0.2;
-    let b  = 0.3;
+    let a: f64 = 0.1 + 0.2;
+    let b = 0.3_f64;
     println!("compare {}", a == b);
+    f32::EPSILON;
     println!("compare {}", (a - b).abs() <= f64::EPSILON);
+}
+
+fn char_size() {
+    let a = 'a';
+    println!("char size: {}", std::mem::size_of_val(&a));
+    let a = '中';
+    println!("char size: {}", std::mem::size_of_val(&a));
+}
+
+fn statement_or_expression() -> i32 {
+    let a = 1;
+    let b: Vec<f64> = Vec::new();
+    // 上面的都是语句，他们完成了一个具体的操作，但是没有返回值。
+
+
+    5 + 7 // 表达式会进行计算，并返回一个值
+    // 表达式可以成为语句的一部分，例如 let y = 6 中，6 就是一个表达式，它在求值后返回一个值 6（有些反直觉，但是确实是表达式）
+}
+
+// ! 表示一个永远不会返回的类型，例如 panic! 宏
+fn for_loop()  -> ! {
+    let a = [1, 2, 3, 4, 5];
+    for i in a.iter() {
+        println!("{}", i);
+    }
 }
