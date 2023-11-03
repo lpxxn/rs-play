@@ -1,13 +1,17 @@
+use std::fmt::format;
+
 fn main() {
     basic();
     no_change();
     change_value();
+    change_i32();
+    ref_test();
 }
 
 fn basic() {
     let x = 5;
     let y = &x;
-    println!("x: {}, y: {} *y: {}", x, y, *y);
+    println!("x: {}, y: {:p} *y: {}", x, y, *y);
     // let address = y as *const _; //或者
     let address = y as *const i32;
     println!("address: {:?}", address);
@@ -28,11 +32,33 @@ fn calculate_length(s: &String) -> usize {
 fn change_value() {
     let mut s = String::from("hello");
     change_str(&mut s);
+    change_str2(&mut s);
     println!("s: {}", s);
 }
 
 fn change_str(s: &mut String) {
     s.push_str(", world");
+}
+
+fn change_str2(ref mut s: &mut String) {
+    s.push_str(", ref change 2");
+}
+
+fn change_i32() {
+    let mut x = 5;
+    println!("origin x: {}", x);
+    change_i321(&mut x);
+    println!("x: {}", x);
+    change_i322(x);
+    println!("x: {}", x);
+}
+
+fn change_i321(x: &mut i32) {
+    *x += 1;
+}
+
+fn change_i322(ref mut x: i32) {
+    *x += 2;
 }
 
 // dangling references 悬垂引用，也叫悬垂指针，指针指向一个值后，这个值被释放了，而这个指针还在使用，他指向的内存可能不存任何值了或已经被其他变量使用了
@@ -47,4 +73,19 @@ fn change_str(s: &mut String) {
 fn no_dangle() -> String {
     let s = String::from("hello");
     s
+}
+
+// ref
+fn ref_test() {
+    let c = '中';
+    let r1 = &c;
+    let ref r2 = c;
+    assert_eq!(*r1, *r2);
+    assert_eq!(get_addr(r1), get_addr(r1));
+}
+
+fn get_addr(r: &char) -> String {
+    let a = format!("{:p}", r);
+    println!("addr: {}", a);
+    a
 }
