@@ -1,5 +1,8 @@
+use std::fmt;
 fn main() {
     basic_struct();
+    tup_struct();
+    unit_struct();
 }
 
 #[derive(Debug)]
@@ -37,4 +40,40 @@ fn build_user(email: String, username: String) -> User {
         active: true,
         sign_in_count: 1,
     }
+}
+
+// 无组结构体
+fn tup_struct() {
+    #[derive(Debug)]
+    struct Point(i32, i32, i32);
+    let black = Color(1, 2, 3);
+    let origin = Point(0, 0, 0);
+    println!("black: {}, origin: {:?}", black, origin);
+    check_color(black);
+}
+struct Color(i32, i32, i32);
+
+impl fmt::Display for Color {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "(你好：{2}, {0}, {1})", self.0, self.1, self.2)
+    }
+}
+fn check_color(c: Color) {
+    let Color(x, _, _) = c;
+    println!("x: {}", x);
+    println!("c: {}", c);
+}
+
+
+
+// 单元结构体 Unit-Like Structs Without Any Fields
+fn unit_struct() {
+    struct Unit;
+    let unit = Unit;
+    impl Unit {
+        fn new() -> Unit {
+            Unit
+        }
+    }
+    let unit2 = Unit::new();
 }
