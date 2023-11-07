@@ -3,7 +3,7 @@ fn main() {
     println!("arr: {:?}", arr);
 
     let one = [1, 2, 3];
-    let two:[u8; 3] = [1, 2, 3];
+    let two: [u8; 3] = [1, 2, 3];
     let blank = [0; 3];
     let blank2: [u8; 3] = [1; 3];
     println!("one: {:?}, two: {:?}, blank: {:?}, blank2: {:?}", one, two, blank, blank2);
@@ -11,6 +11,11 @@ fn main() {
     for a in &arr {
         println!("a: {}", a);
     }
+
+    for a in arr.iter() {
+        println!("a: {}", a);
+    }
+    println!("arr: {:?}", arr);
     for i in 0..one.len() {
         println!("one[{}]: {}", i, one[i]);
     }
