@@ -24,6 +24,7 @@ fn main() {
 
     run_print_coordinates();
     at_test();
+    mut_v();
 }
 
 enum Direction {
@@ -173,4 +174,15 @@ fn at_test() {
     }
 }
 
+fn mut_v() {
+    let mut v = "hello".to_string();
+    let r = &mut v;
+    match r {
+        // The type of value is &mut String
+        value => {
+            value.push_str("world");
+        }
+    }
+    println!("v: {}", v);
+}
 
