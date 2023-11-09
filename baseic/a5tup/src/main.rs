@@ -1,6 +1,14 @@
 fn main() {
     basic_tup();
     tup_too_long();
+
+    let tup = ("hello".to_string(), 1);
+
+    let (a, b) = &tup;
+    println!("a: {}, b: {}", a, b);
+    println!("tup: {:?}", tup);
+    let &(ref a, b) = &tup;
+    println!("a: {}, b: {}", a, b);
 }
 
 
