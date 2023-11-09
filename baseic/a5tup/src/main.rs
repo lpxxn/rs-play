@@ -7,8 +7,15 @@ fn main() {
     let (a, b) = &tup;
     println!("a: {}, b: {}", a, b);
     println!("tup: {:?}", tup);
-    let &(ref a, b) = &tup;
-    println!("a: {}, b: {}", a, b);
+    // let &(ref a, b) = &tup;
+    // println!("a: {}, b: {}", a, b);
+
+    // let c = &tup;
+    // let d = &tup.0;
+    // let e = &tup.0;
+    // println!("address p.0 {:p} e: {:p}", &tup.0, &e);
+    // println!("c: {:?}", c);
+    //println!("tup: {:?}", tup);
 }
 
 
