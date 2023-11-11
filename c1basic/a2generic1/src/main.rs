@@ -1,5 +1,8 @@
 mod test_large;
 mod point;
+// 这比较好玩，r#const
+mod r#const;
+
 fn main() {
     println!("add i32 {}", add(1, 2));
     println!("add f64 {}", add(1.12, 2.23));
