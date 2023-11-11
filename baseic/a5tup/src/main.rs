@@ -3,11 +3,12 @@ fn main() {
     tup_too_long();
 
     let tup = ("hello".to_string(), 1);
-
+    // 下面的就是这样 （a: &String, b: &i32）= &tup
     let (a, b) = &tup;
     println!("a: {}, b: {}", a, b);
     println!("tup: {:?}", tup);
-    // let &(ref a, b) = &tup;
+    // 下面的是这样 &(a: String, b: i32) = &tup
+    // let &(a, b) = &tup;
     // println!("a: {}, b: {}", a, b);
 
     // let c = &tup;
