@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 pub trait Summary {
     fn summarize_author(&self) -> String;
     // 默认实现允许调用相同特征中的其他方法，哪怕这些方法没有默认实现。如此，特征可以提供很多有用的功能而只需要实现指定的一小部分内容
@@ -37,6 +39,23 @@ pub fn notify(item: &impl Summary) {
     println!("Breaking news! {}", item.summarize());
 }
 
+// impl Summary 比较好理解，但实际上他是一个语法糖，等价于下面的写法：
+pub fn notify2<T: Summary>(item: &T) {
+    println!("Breaking news! {}", item.summarize());
+}
+/*
+真正的完整书写形式如上所述，形如 T: Summary 被称为特征约束。
+多重约束
+*/
+
+pub fn notify3(item: &(impl Summary + Display)) {
+    println!("Breaking news! {}", item.summarize());
+}
+
+pub fn notify4<T: Summary + Display>(item: &T) {
+    println!("Breaking news! {}", item.summarize());
+}
+
 #[cfg(test)]
 mod test_summary {
     use super::*;
@@ -59,5 +78,7 @@ mod test_summary {
         println!("notify post: ---------------");
         notify(&post);
         notify(&weibo);
+        notify2(&post);
+        notify2(&weibo);
     }
 }
