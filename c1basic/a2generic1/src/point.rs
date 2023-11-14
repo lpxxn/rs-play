@@ -38,6 +38,9 @@ pub mod point {
 
 #[cfg(test)]
 mod test_point {
+    use std::arch::aarch64::int32x2_t;
+    use std::convert::Infallible;
+    use std::str::Chars;
     use super::point::Point;
 
     #[test]
@@ -46,5 +49,18 @@ mod test_point {
         println!("p: {:?}", p);
         let p = Point::new2(12, "string".to_string());
         println!("p: {:?}", p);
+    }
+
+    #[test]
+    fn test_try_into() {
+        let a: i32 = 10;
+        let b: u16 = 100;
+
+        let b_ = b.try_into()
+            .unwrap();
+
+        if a < b_ {
+            println!("Ten is less than one hundred.");
+        }
     }
 }

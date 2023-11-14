@@ -2,6 +2,7 @@ mod test_large;
 mod point;
 // 这比较好玩，r#const
 mod r#const;
+mod add;
 
 fn main() {
     println!("add i32 {}", add(1, 2));
