@@ -56,6 +56,21 @@ pub fn notify4<T: Summary + Display>(item: &T) {
     println!("Breaking news! {}", item.summarize());
 }
 
+fn random_article(random_number: f64) -> Box<dyn Summary> {
+    if random_number < 0.5 {
+        Box::new(Weibo {
+            username: "li".to_string(),
+            content: "haha rust".to_string(),
+        })
+    } else {
+        Box::new(Post {
+            title: "title".to_string(),
+            author: "".to_string(),
+            content: "".to_string(),
+        })
+    }
+}
+
 #[cfg(test)]
 mod test_summary {
     use super::*;
@@ -80,5 +95,12 @@ mod test_summary {
         notify(&weibo);
         notify2(&post);
         notify2(&weibo);
+    }
+
+    #[test]
+    fn test_random_article() {
+        let random_number = 0.3;
+        let article = random_article(random_number);
+        println!("article: {}", article.summarize());
     }
 }
