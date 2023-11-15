@@ -1,5 +1,8 @@
 mod bird;
 mod safe_trait;
+mod advance;
+mod advance2;
+mod advance3;
 
 fn main() {
     let x = 1u8;
