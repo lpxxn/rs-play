@@ -1,3 +1,6 @@
+mod bird;
+mod safe_trait;
+
 fn main() {
     let x = 1u8;
     let y = 1.0f64;
@@ -57,6 +60,15 @@ fn draw1(x: Box<dyn Draw>) {
 fn draw2(x: &dyn Draw) {
     println!("{}", x.draw());
 }
+
+/*
+注意 dyn 不能单独作为特征对象的定义，例如下面的代码编译器会报错，原因是特征对象可以是任意实现了某个特征的类型，编译器在编译期不知道该类型的大小，不同的类型大小是不同的。
+而 &dyn 和 Box<dyn> 在编译期都是已知大小，所以可以用作特征对象的定义。
+
+fn draw2(x: dyn Draw) {
+    x.draw();
+}
+ */
 
 pub struct Screen {
     pub components: Vec<Box<dyn Draw>>,
