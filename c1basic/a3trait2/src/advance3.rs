@@ -1,7 +1,6 @@
 #[derive(Debug)]
 struct Container(i32, i32);
 
-
 trait Contains<A, B> {
     fn contains(&self, _: &A, _: &B) -> bool;
     fn first(&self) -> i32;

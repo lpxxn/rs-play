@@ -1,9 +1,8 @@
 mod bird;
 mod safe_trait;
-mod advance;
-mod advance2;
+mod advance1_same_name;
+mod advance2_sup_trait;
 mod advance3;
-mod trait_advanced;
 mod advance4;
 
 fn main() {
