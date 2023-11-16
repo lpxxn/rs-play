@@ -18,6 +18,12 @@ impl Contains<i32, i32> for Container {
         let a = &self.0;
         println!("a: {:?}", a);
         // 对比两个引用时, 会自动解引用，所以这里不需要 *
+        // 哪些类型可以自动解引用呢？只有实现了 Deref trait 的类型可以自动解引用。
+        let x = 5;
+        let x_ref = &x;
+        println!("x_ref: {}", *x_ref); // Dereference explicitly use *
+        println!("x_ref: {}", x_ref); // auto dereference
+
         (&self.0 == n1) && (&self.1 == n2)
     }
 
