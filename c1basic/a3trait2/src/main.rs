@@ -3,6 +3,8 @@ mod safe_trait;
 mod advance;
 mod advance2;
 mod advance3;
+mod trait_advanced;
+mod advance4;
 
 fn main() {
     let x = 1u8;
