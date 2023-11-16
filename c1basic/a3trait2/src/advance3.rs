@@ -17,6 +17,7 @@ impl Contains<i32, i32> for Container {
     fn contains(&self, n1: &i32, n2: &i32) -> bool {
         let a = &self.0;
         println!("a: {:?}", a);
+        // 对比两个引用时, 会自动解引用，所以这里不需要 *
         (&self.0 == n1) && (&self.1 == n2)
     }
 
