@@ -8,7 +8,7 @@ fn read_username_from_file() -> Result<String, Box<dyn Error>> {
     let full_path_str = current_hello_txt_path();
     let full_path_str = match full_path_str {
         Ok(path) => path,
-        Err(e) => return Err(e),
+        Err(e) => return Err(Box::new(e)),
     };
     println!("full_path_str: {}", full_path_str);
 
