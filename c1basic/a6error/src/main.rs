@@ -1,3 +1,5 @@
+mod err1;
+
 use std::fs::File;
 use std::io::ErrorKind;
 use std::net::IpAddr;
