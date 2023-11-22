@@ -1,4 +1,6 @@
-典型的 Package 结构
+Package 是一个项目工程，而包只是一个编译单元，基本上也就不会混淆这个两个概念了：src/main.rs 和 src/lib.rs 都是编译单元，因此它们都是包。
+
+## 典型的 Package 结构
 上面创建的 Package 中仅包含 src/main.rs 文件，意味着它仅包含一个二进制同名包 my-project。如果一个 Package 同时拥有
 src/main.rs 和 src/lib.rs，那就意味着它包含两个包：库包和二进制包，这两个包名也都是 my-project —— 都与 Package 同名。
 
