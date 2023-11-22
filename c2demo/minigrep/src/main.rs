@@ -30,4 +30,10 @@ fn main() {
         println!("Application error: {}", e);
         process::exit(1);
     }
+    println!("----------begin query----------");
+    if let Err(e) = minigrep::query(&config) {
+        println!("Application error: {}", e);
+        process::exit(1);
+    }
+    println!("Hello, world!");
 }
