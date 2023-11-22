@@ -1,7 +1,7 @@
 创建结构体实例
-为了使用上述结构体，我们需要创建 User 结构体的实例：
+为了使用上述结构体，我们需要创建 user 结构体的实例：
 
-    let user1 = User {
+    let user1 = user {
         email: String::from("someone@example.com"),
         username: String::from("someusername123"),
         active: true,
@@ -14,7 +14,7 @@
 
 >  需要注意的是，必须要将结构体实例声明为可变的，才能修改其中的字段，Rust 不支持将某个结构体某个字段标记为可变。
 ```rust
-    let mut user1 = User {
+    let mut user1 = user {
         email: String::from("someone@example.com"),
         username: String::from("someusername123"),
         active: true,
