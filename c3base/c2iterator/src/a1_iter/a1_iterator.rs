@@ -27,4 +27,28 @@ mod tests {
             };
         }
     }
+
+    #[test]
+    fn test_iter3() {
+        let values = vec![1, 2, 3];
+        for va in values.into_iter().into_iter().into_iter() {
+            println!("v: {va}");
+        }
+    }
+
+    #[test]
+    fn test_iter4() {
+        let values = vec![1, 3, 4];
+        let v1_iter = values.iter();
+        println!("v1_iter: {:?}", v1_iter);
+        let total: i32 = v1_iter.sum();
+        //        ----- `v1_iter` moved due to this method call
+        println!("total: {total}");
+
+        // v1_iter 是借用了 values，因此 values 可以照常使用
+        println!("{:?}", values);
+
+        // 以下代码会报错，因为 `sum` 拿到了迭代器 `v1_iter` 的所有权
+        println!("{:?}", v1_iter);
+    }
 }
