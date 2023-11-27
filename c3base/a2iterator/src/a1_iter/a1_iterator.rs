@@ -49,6 +49,6 @@ mod tests {
         println!("{:?}", values);
 
         // 以下代码会报错，因为 `sum` 拿到了迭代器 `v1_iter` 的所有权
-        println!("{:?}", v1_iter);
+        // println!("{:?}", v1_iter);
     }
 }

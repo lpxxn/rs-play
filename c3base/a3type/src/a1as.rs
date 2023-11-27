@@ -1,0 +1,49 @@
+fn address_2_pointer() {
+    let a = 1;
+    let b = &a;
+    let c = &b;
+    println!("a: {:p}", &a);
+    println!("b: {:p}", b);
+    println!("c: {:p}", c);
+    println!("c: {:p}", *c);
+}
+
+fn add_2_pointer() {
+    let mut values: [i32; 2] = [1, 2];
+    println!("value address: {:p}", &values);
+    println!("value 1 address: {:p}", &values[0]);
+    println!("value 2 address: {:p}", &values[1]);
+    let p1: *mut i32 = values.as_mut_ptr(); // as_mut_ptr() 返回一个指向数组第一个元素的指针
+    println!("p1: {:?}", p1);
+    println!("p1: {:p}", &p1);
+    let first_address = p1 as usize; // 将p1内存地址转换为usize类型
+    println!("int32 size: {}", std::mem::size_of::<i32>()); // 打印i32类型的字节大小
+    println!("first_address: {:?}", first_address);
+
+    let second_address = first_address + std::mem::size_of::<i32>(); // 计算第二个元素的内存地址
+    println!("second_address: {:?}", second_address);
+    println!("second_address: {:p}", second_address as *mut i32); // 将usize类型的内存地址转换为指向i32类型的指针
+
+    let p2: *mut i32 = second_address as *mut i32; // 将usize类型的内存地址转换为指向i32类型的指针
+    println!("p2 value: {:?}", p2);
+    println!("p2 address: {:p}", &p2);
+    unsafe {
+        *p2 = 3; // 通过指针修改数组的第二个元素
+    }
+    println!("values: {:?}", values);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_address_2_pointer() {
+        address_2_pointer();
+    }
+
+    #[test]
+    fn test_add_2_pointer() {
+        add_2_pointer();
+    }
+}
