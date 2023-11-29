@@ -69,4 +69,32 @@ mod tests {
         println!("x: {:?}", x);
         // assert_eq!(3, x);
     }
+
+    #[test]
+    fn test_refcell2() {
+        let x = RefCell::new(1);
+        let y = &x;
+        let z = &x;
+        // let xv = x.borrow(); // 打开试试
+        *x.borrow_mut() = 5;
+        let mut yv = y.borrow_mut();
+        *yv = 11;
+        // already borrowed: BorrowMutError
+        //z.borrow_mut();
+        println!("x: {:?}, y: {:?}, z: {:?}", x, y, z);
+    }
+
+    #[test]
+    fn test_refcell3() {
+        let s = Rc::new(RefCell::new(String::from("hello")));
+        let s1 = s.clone();
+        let s2 = s.clone();
+        {
+            let mut sv = s1.borrow_mut();
+            // let mut s2v = s2.borrow_mut();
+            *sv = String::from("world");
+        }
+        println!("s: {:?}, s1: {:?}, s2: {:?}", s, s1, s2);
+        // 由于 Rc 的所有者们共享同一个底层的数据，因此当一个所有者修改了数据时，会导致全部所有者持有的数据都发生了变化。
+    }
 }
