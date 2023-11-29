@@ -1,6 +1,7 @@
 mod a2deref;
 mod a1_box;
 mod a3deref;
+mod a4rc;
 
 pub fn add(left: usize, right: usize) -> usize {
     left + right
