@@ -1,4 +1,5 @@
 mod a1condition;
+mod a2_mpsc;
 
 use std::cell::RefCell;
 use std::sync::{Arc, Barrier};
