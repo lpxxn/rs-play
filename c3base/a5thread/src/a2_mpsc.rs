@@ -1,5 +1,9 @@
 //标准库提供了通道std::sync::mpsc，其中mpsc是multiple producer, single consumer的缩写，代表了该通道支持多个发送者，但是只支持唯一的接收者。
-
+/*
+之前提到，通道关闭的两个条件：发送者全部drop或接收者被drop，
+要结束for循环显然是要求发送者全部drop，但是由于send自身没有被drop，
+会导致该循环永远无法结束，最终主线程会一直阻塞。
+ */
 use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
