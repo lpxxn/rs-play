@@ -2,6 +2,7 @@
 
 use std::sync::mpsc;
 use std::thread;
+use std::time::Duration;
 
 fn mpsc1() {
     // 创建一个通道，返回一个无组（发送者，接收者）的元组
@@ -28,8 +29,11 @@ fn mpsc2() {
 
     let tx2 = tx.clone();
     thread::spawn(move || {
+        println!("before sleep 1");
+        thread::sleep(Duration::from_secs(1));
         let val = String::from("hi tx2");
         tx2.send(val).unwrap();
+        println!("after sleep 1");
         // println!("val: {}", val); // val的所有权已经转移到子线程中，所以这里会报错
     });
     thread::spawn(move || {
