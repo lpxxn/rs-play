@@ -1,7 +1,10 @@
 mod r;
+mod this_err_test;
 
 use std::{fmt, io, num};
+use std::error::Error;
 use std::fmt::{Debug, Display};
+use std::fs::read_to_string;
 
 
 #[derive(Debug)]
@@ -85,6 +88,12 @@ mod tests {
 
         Ok(())
     }
+}
+
+fn reader() -> Result<String, Box<dyn Error>> {
+    let file = std::env::var("MYFILE")?;
+    let source = read_to_string(file)?;
+    Ok(source)
 }
 
 
