@@ -41,7 +41,30 @@ impl Future for TimerFuture {
         }
     }
 }
+// 创建一个 API 用于构建定时器和启动计时线程:
+impl TimerFuture {
+     pub fn new(duration: Duration) -> Self {
+        let shared_state = Arc::new(Mutex::new(SharedState {
+            completed: false,
+            waker: None,
+        }));
 
+        let thread_shared_state = shared_state.clone();
+        thread::spawn(move || {
+            thread::sleep(duration);
+            let mut shared_state = thread_shared_state.lock().unwrap();
+            // 将completed设置为true 唤醒在此定时器上阻塞的任务
+            shared_state.completed = true;
+            if let Some(waker) = shared_state.waker.take() {
+                waker.wake()
+            }
+        });
+
+        TimerFuture{
+            shared_state
+        }
+     }
+}
 
 #[cfg(test)]
 mod tests {
