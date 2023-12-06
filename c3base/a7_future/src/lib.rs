@@ -1,11 +1,13 @@
 use std::{
     future::Future,
     pin::Pin,
-    sync::{Arc, Mutex},
+    sync::{Arc, Mutex, mpsc::{Receiver, SyncSender, sync_channel}},
     thread,
-    time::Duration,
+    time::Duration, mem::ManuallyDrop,
 };
 use std::task::Poll;
+
+use futures::future::BoxFuture;
 /*
 新建线程在睡眠结束后会需要将状态同步给定时器 Future ，由于是多线程环境，我们需要使用 Arc<Mutex<T>> 来作为一个共享状态，用于在新线程和 Future 定时器间共享。
  */
@@ -72,4 +74,37 @@ mod tests {
 
     #[test]
     fn it_works() {}
+}
+
+/// 任务执行器，负责从通道中接收任务然后执行
+struct Executor {
+    ready_queue: Receiver<Arc<Task>>,
+}
+
+/// `Spawner`负责创建新的`Future`然后将他发送到任务中
+struct Spawner {
+    task_sender: SyncSender<Arc<Task>>
+}
+
+
+/// 一个Future，它可以高度自己（将自己放入任务通道中），然后等待执行器去`Poll`
+struct Task {
+    /// 进行中的Future,在未来的某个时间点会被完成
+    /// 
+    /// 按理来说`Mutex`在这里是多余的，因为我们只有一个线程来执行任务。但由于
+    /// 我们需要使用`Mutex`来满足不太聪明的编译器对线程安全的执着。
+    /// 
+    /// 如果是生产级的执行器实现，不会使用`Mutex`，因为会带来性能上的开销，取而代之的是使用`UnsafeCell`
+    future: Mutex<Option<BoxFuture<'static, ()>>>,
+
+    /// 可以将该任务自身放回到任务通道中，等待执行器pool
+    task_sender: SyncSender<Arc<Task>>
+}
+
+fn new_executor_and_spawner() -> (Executor, Spawner) {
+    // 任务通道允许的最大缓冲数（任务队列的最大长度）
+    // 当任务的实现仅仅是为了简单，在实际的执行中，并不会这么使用
+    const MAX_QUEUED_TASKS: usize = 10_000;
+    let (task_sender, ready_queue) = sync_channel(MAX_QUEUED_TASKS);
+    (Executor{ready_queue}, Spawner{task_sender})
 }
