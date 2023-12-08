@@ -1,3 +1,5 @@
+mod m_unpin;
+
 #[derive(Debug)]
 struct Test {
     a: String,
