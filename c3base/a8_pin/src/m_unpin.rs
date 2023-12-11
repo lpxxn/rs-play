@@ -33,6 +33,11 @@ impl Test {
         unsafe { &*(self.b) }
     }
 }
+/*
+上面代码中，我们使用了一个标记类型 PhantomPinned 将自定义结构体 Test 变成了 !Unpin (编译器会自动帮我们实现)，因此该结构体无法再被移动。
+一旦类型实现了 !Unpin ，那将它的值固定到栈( stack )上就是不安全的行为，因此在代码中我们使用了 unsafe 语句块来进行处理，
+你也可以使用 pin_utils 来避免 unsafe 的使用。
+ */
 
 #[cfg(test)]
 mod tests {
@@ -52,8 +57,9 @@ mod tests {
         let mut test2 = unsafe { Pin::new_unchecked(&mut test2) };
         Test::init(test2.as_mut());
         println!("test2: {:?} a: {}, b: {}", test2, Test::a(test2.as_ref()), Test::b(test2.as_ref()));
+        // 再去尝试移动被固定的值，就会导致编译错误：
         // 编译期间就会报错
-        std::mem::swap(&mut test1.get_mut(), &mut test2.get_mut());
+        // std::mem::swap(&mut test1.get_mut(), &mut test2.get_mut());
         println!("after swap test1: {:?} a: {}, b: {}", test1, Test::a(test1.as_ref()), Test::b(test1.as_ref()));
         println!("after swap test2: {:?} a: {}, b: {}", test2, Test::a(test2.as_ref()), Test::b(test2.as_ref()));
     }
