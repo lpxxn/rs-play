@@ -1,0 +1,15 @@
+[package]
+name = "a9atokio"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+tokio = { version = "1.15.0", features = ["full"] }
+
+[[example]]
+name = "tok1"
+path = "example/a1s.rs"
+# cargo run --example tok1
+
