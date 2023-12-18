@@ -1,5 +1,6 @@
+use std::collections::HashMap;
 use tokio::net::{TcpListener, TcpStream};
-use mini_redis::{Connection, Frame};
+use mini_redis::{Command, Connection, Frame};
 
 #[tokio::main]
 async fn main() {
@@ -18,14 +19,41 @@ async fn main() {
 }
 
 async fn process(socket: TcpStream) {
+    use mini_redis::Command::{Get, Set};
+    use std::collections::HashMap;
+
+    // 使用hashMap存储redis数据
+    let mut db = HashMap::new();
+
     // connection  对于redis的读取进行了抽象，读取的是一个一个数据帧frame(数据帧 = redis 命令+数据),而
     // 不是字节流
     let mut connection = Connection::new(socket);
-    if let Some(frame) = connection.read_frame().await.unwrap() {
+    while let Some(frame) = connection.read_frame().await.unwrap() {
         println!("GOT {:?}", frame);
 
         // 回复一个错误
-        let response = Frame::Error("unimplemented".to_string());
-        connection.write_frame(&response).await.unwrap()
+        // let response = Frame::Error("unimplemented".to_string());
+
+        let response = match Command::from_frame(frame).unwrap() {
+            Set(cmd) => {
+                // 值被存储为 Vec<u8> 的形式
+                db.insert(cmd.key().to_string(), cmd.value().to_vec());
+                Frame::Simple("OK".to_string())
+            }
+            Get(cmd) => {
+                if let Some(value) = db.get(cmd.key()) {
+                    let v = value.clone();
+                    Frame::Bulk(v.into())
+                } else {
+                    Frame::Null
+                }
+            }
+            cmd => {
+                // panic!("unimplemented {:?}", cmd)
+                Frame::Simple("OK".to_string())
+            }
+        };
+        // 将响应返回给客户端
+        connection.write_frame(&response).await.unwrap();
     }
 }

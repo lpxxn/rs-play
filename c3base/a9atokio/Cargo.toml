@@ -12,4 +12,6 @@ tokio = { version = "1.15.0", features = ["full"] }
 name = "tok1"
 path = "example/a1s.rs"
 # cargo run --example tok1
-
+[[example]]
+name = "send1"
+path = "example/a2s.rs"
