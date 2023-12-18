@@ -8,7 +8,17 @@ edition = "2021"
 [dependencies]
 tokio = { version = "1.15.0", features = ["full"] }
 mini-redis = "0.4.1"
+bytes = "1.5.0"
 
 [[example]]
-name = "hello-redis"
-path = "examples/hello-redis.rs"
+name = "a1-hello-redis"
+path = "examples/a1-hello-redis.rs"
+
+[[example]]
+name = "a2-hello-redis"
+path = "examples/a2-hello-redis.rs"
+
+
+[[example]]
+name = "a3-hello-redis"
+path = "examples/a3-hello-redis.rs"
