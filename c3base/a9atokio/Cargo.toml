@@ -15,3 +15,7 @@ path = "example/a1s.rs"
 [[example]]
 name = "send1"
 path = "example/a2s.rs"
+
+[[example]]
+name = "a3mpsc"
+path = "example/a3mpsc.rs"
