@@ -19,3 +19,7 @@ path = "example/a2s.rs"
 [[example]]
 name = "a3mpsc"
 path = "example/a3mpsc.rs"
+
+[[example]]
+name = "a4rw"
+path = "example/a4rw.rs"

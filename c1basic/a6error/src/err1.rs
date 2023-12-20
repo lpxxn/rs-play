@@ -66,6 +66,7 @@ fn read_text5() -> Result<String, io::Error> {
 }
 
 
+// 当前目录
 fn current_hello_txt_path() -> Result<String, Box<dyn Error>> {
     let current_dir = env::current_dir();
     // check current_dir is Ok or Err
