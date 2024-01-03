@@ -24,24 +24,21 @@ mod test {
 
     // 3. 获取 test.data 的引用然后再设置给 rData
     test.r_data = &test.data;
-    println!("test: {:?} data: {}, rData: {}", test, test.data, unsafe { &*test.r_data });
+    println!("test: {:?} data: {}, rData: {}, data address: {:p}", test, test.data, unsafe { &*test.r_data }, &test.data);
     // print data memory address
     println!("data address: {:p}", &test.data);
 
     // 如果把data的值改变了呢
     test.data = String::from("应用");
     println!("data address: {:p}", &test.data);
-    // let v = test.data;
-    // println!("test: {:?} data: {}, r_Data: {}", v, v, unsafe { &*test.r_data });
-    // test.data = String::new();
-    // println!("test: {:?} data: {}, rData: {}", test, test.data, unsafe { &*test.r_data });
-
+   
+    // 4. 这里我们再次打印一下test，看看rData的值是否改变了，还是没有变
     let t2 = test;
-    println!("t2: {:?} data: {}, rData: {}", t2, t2.data, unsafe { &*t2.r_data });
+    println!("test: {:?} data: {}, rData: {}, data address: {:p}", t2, t2.data, unsafe { &*t2.r_data }, &t2.data);
     print_test(t2)
   }
   fn print_test(test: Test) {
-    println!("test: {:?} data: {}, rData: {}", test, test.data, unsafe { &*test.r_data });
+    println!("test: {:?} data: {}, rData: {}, data address: {:p}", test, test.data, unsafe { &*test.r_data }, &test.data);
   }
 
   #[test]
