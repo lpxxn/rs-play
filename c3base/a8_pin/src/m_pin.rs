@@ -31,9 +31,16 @@ mod test {
     // 如果把data的值改变了呢
     test.data = String::from("应用");
     println!("data address: {:p}", &test.data);
-    let v = test.data;
-    println!("test: {:?} data: {}, rData: {}", v, v, unsafe { &*test.r_data });
-    test.data = String::new();
+    // let v = test.data;
+    // println!("test: {:?} data: {}, r_Data: {}", v, v, unsafe { &*test.r_data });
+    // test.data = String::new();
+    // println!("test: {:?} data: {}, rData: {}", test, test.data, unsafe { &*test.r_data });
+
+    let t2 = test;
+    println!("t2: {:?} data: {}, rData: {}", t2, t2.data, unsafe { &*t2.r_data });
+    print_test(t2)
+  }
+  fn print_test(test: Test) {
     println!("test: {:?} data: {}, rData: {}", test, test.data, unsafe { &*test.r_data });
   }
 
