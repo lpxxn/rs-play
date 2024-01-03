@@ -1,3 +1,4 @@
+mod m_pin;
 mod m_unpin;
 mod some_questions;
 
