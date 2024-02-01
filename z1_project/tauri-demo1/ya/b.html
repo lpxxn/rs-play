@@ -14,5 +14,23 @@
 <script>
     document.getElementById("my-header").innerHTML = "Hello World!";
 </script>
+
+<div id="content" contenteditable="true" style="height: 200px; overflow-y: auto;">
+    <!-- Content will be appended here -->
+</div>
+
+<button id="appendButton">Append Text</button>
+
+<script>
+    document.getElementById('appendButton').addEventListener('click', function () {
+        // Append text to the element
+        let content = document.getElementById('content');
+        content.innerHTML += 'Appended text<br>';
+        const contentHeight = content.scrollHeight;
+        console.log("contentHeight: " + contentHeight);
+        // Scroll to the end of the element
+        content.scrollTop = content.scrollHeight;
+    });
+</script>
 </body>
 </html>
