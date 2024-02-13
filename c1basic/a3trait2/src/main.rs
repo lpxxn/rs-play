@@ -4,6 +4,7 @@ mod advance1_same_name;
 mod advance2_sup_trait;
 mod advance3;
 mod advance4;
+mod screen;
 
 fn main() {
     let x = 1u8;
