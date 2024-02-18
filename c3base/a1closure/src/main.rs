@@ -105,6 +105,15 @@ fn test_closure5() {
 }
 
 // fn exec3<F: FnMut(&str) -> String>(mut f: F) {
-fn exec3<'a, F: FnOnce(&'a str) -> String>(mut f: F) {
+fn exec3<'a, F: FnOnce(&'a str) -> String>(f: F) {
     f(" world");
+}
+
+fn factory(x: i32) -> Box<dyn Fn(i32) -> i32> {
+    let num = 10;
+    if x > 0 {
+        Box::new(move |y| y + x + num)
+    } else {
+        Box::new(move |y| y + x - num)
+    }
 }
