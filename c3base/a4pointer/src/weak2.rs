@@ -1,4 +1,5 @@
-use std::rc::Rc;
+use std::cell::RefCell;
+use std::rc::{Rc, Weak};
 
 #[test]
 fn fn_test_weak1() {
@@ -40,4 +41,41 @@ fn fn_test_weak1() {
     let strong_five: Option<Rc<_>> = weak_five.upgrade();
     println!("strong_five = {:?}", strong_five);
     assert_eq!(None, strong_five);
+}
+
+
+#[derive(Debug)]
+enum List {
+    Cons(u32, RefCell<Weak<List>>),
+    // Nil: 链表中的最后一个节点，用于说明链表的结束
+    Nil,
+}
+
+impl List {
+    fn tail(&self) -> Option<&RefCell<Weak<List>>> {
+        match self {
+            List::Cons(_, item) => Some(item),
+            List::Nil => None,
+        }
+    }
+}
+
+#[test]
+fn test_list() {
+    let a = Rc::new(List::Cons(1, RefCell::new(Weak::new())));
+    println!("a initial rc count = {}", Rc::strong_count(&a));
+    println!("a next item = {:?}", a.tail());
+
+    let b = Rc::new(List::Cons(2, RefCell::new(Rc::downgrade(&a))));
+    println!("a rc count after b creation = {}", Rc::strong_count(&a));
+    println!("b initial rc count = {}", Rc::strong_count(&b));
+    println!("b next item = {:?}", b.tail());
+
+    if let Some(link) = a.tail() {
+        println!("a next item link = {:?}", link);
+        *link.borrow_mut() = Rc::downgrade(&b);
+    }
+    println!("b rc count after changing a = {}", Rc::strong_count(&b));
+    println!("a rc count after changing a = {}", Rc::strong_count(&a));
+    println!("a next item after changing a = {:?}", a.tail());
 }
