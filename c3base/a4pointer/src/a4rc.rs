@@ -1,3 +1,5 @@
+use std::cell::{Ref, RefCell};
+
 #[cfg(test)]
 mod tests {
     use std::cell::{Cell, RefCell};
@@ -97,4 +99,40 @@ mod tests {
         println!("s: {:?}, s1: {:?}, s2: {:?}", s, s1, s2);
         // 由于 Rc 的所有者们共享同一个底层的数据，因此当一个所有者修改了数据时，会导致全部所有者持有的数据都发生了变化。
     }
+}
+
+#[test]
+fn test_refcell_mut() {
+    let mut x = 1;
+    let y = &mut x;
+    *y = 3;
+    println!("x: {:?}", x);
+    let z = &mut x;
+    *z = 4;
+    println!("x: {:?}", x);
+}
+
+// &self 修改内部状态
+pub trait Messenger {
+    fn send(&self, msg: String);
+}
+
+pub struct MsgQueue {
+    msg_cache: RefCell<Vec<String>>,
+}
+
+impl Messenger for MsgQueue {
+    fn send(&self, msg: String) {
+        self.msg_cache.borrow_mut().push(msg);
+    }
+}
+
+#[test]
+fn test_msg() {
+    let mq = MsgQueue {
+        msg_cache: RefCell::new(vec![]),
+    };
+    mq.send("hello".to_string());
+    mq.send("world".to_string());
+    println!("mq: {:?}", mq.msg_cache.borrow());
 }

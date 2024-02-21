@@ -16,14 +16,13 @@ pub struct Post {
 
 impl Summary for Post {
     fn summarize_author(&self) -> String {
-        format!("author: {}", self.author)
+        format!(" author: {}", self.author)
     }
 
     fn summarize(&self) -> String {
         format!("{} by {} ", self.title, self.author)
     }
 }
-
 pub struct Weibo {
     pub username: String,
     pub content: String,

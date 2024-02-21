@@ -2,6 +2,7 @@ mod a1summary;
 mod a2traitbound;
 mod a3largest;
 mod a4file;
+mod default_demo;
 
 fn main() {
     println!("Hello, world!");
