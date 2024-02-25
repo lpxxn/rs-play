@@ -6,7 +6,8 @@ pub struct ThreadPool {
     sender: Option<mpsc::Sender<Job>>,
 }
 
-type Job = Box<dyn FnOnce() + Send + 'static>;
+// type Job = Box<dyn FnOnce() + Send + 'static>;
+type Job = Box<dyn FnOnce() + Send>;
 
 impl ThreadPool {
     pub fn new(size: usize) -> ThreadPool {
