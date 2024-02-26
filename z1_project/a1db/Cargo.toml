@@ -12,6 +12,7 @@ hyper = { version = "1", features = ["full"] }
 http-body-util = "0.1"
 hyper-util = { version = "0.1", features = ["full"] }
 taplo = "0.13.0"
+serde = { version = "1.0.197", features = ["derive"] }
 
 [[example]]
 name = "sqlite1"
