@@ -13,15 +13,15 @@ http-body-util = "0.1"
 hyper-util = { version = "0.1", features = ["full"] }
 taplo = "0.13.0"
 serde = { version = "1.0.197", features = ["derive"] }
-
+toml = "0.5.11"
 [[example]]
 name = "sqlite1"
-path = "examples/sqlite1"
+path = "examples/sqlite1.rs"
 
 [[example]]
 name = "hyper1"
-path = "examples/hyper1"
+path = "examples/hyper1.rs"
 
 [[example]]
 name = "reqwest1"
-path = "examples/reqwest1"
+path = "examples/reqwest1.rs"
